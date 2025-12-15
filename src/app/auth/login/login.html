@@ -1,0 +1,49 @@
+<div class="pt-28 flex flex-col items-center gap-4">
+  <img src="logo.jpeg" alt="Logo Image" class="w-10 rounded-lg" />
+
+  <h2 class="text-3xl font-semibold">Log in to your account</h2>
+  <p class="text-sm text-gray-400">Welcome back! Please enter your details.</p>
+
+  <form class="min-w-xs mt-5 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="flex flex-col gap-0.5 w-full">
+      <label for="username" class="text-sm text-gray-600">Username</label>
+      <input
+        type="text"
+        id="username"
+        placeholder="Enter your username"
+        class="p-2 border border-gray-300 rounded-lg text-sm focus:outline-none"
+        formControlName="username"
+      />
+
+      @if(usernameIsInvalid){
+      <span class="text-sm text-red-500 text-center">Username is required</span>
+      }
+    </div>
+
+    <div class="flex flex-col gap-0.5 w-full">
+      <label for="password" class="text-sm text-gray-600">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="••••••••"
+        class="p-2 border border-gray-300 rounded-lg text-sm focus:outline-none"
+        formControlName="password"
+      />
+
+      @if(passwordIsInvalid){
+      <span class="text-sm text-red-500 text-center"
+        >Please enter a valid password (min 6 chars)</span
+      >
+      } @else if (credentialsError()) {
+      <span class="text-sm text-red-500 text-center">Invalid username or password</span>
+      }
+    </div>
+
+    <button
+      type="submit"
+      class="w-full bg-sky-500 p-2 text-sm text-gray-700 rounded-lg cursor-pointer"
+    >
+      Sign in
+    </button>
+  </form>
+</div>

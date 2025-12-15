@@ -1,0 +1,29 @@
+<div class="py-4 border-b-2 border-gray-300 text-sm">
+  <div class="container flex justify-between">
+    <div class="flex items-center gap-16">
+      <div class="flex items-center gap-2">
+        <img src="logo.jpeg" alt="Logo" class="w-8 rounded-lg" />
+        <span>ClickTik</span>
+      </div>
+
+      <a class="text-gray-500 cursor-pointer">Home</a>
+    </div>
+
+    <div class="flex items-center text-sm text-gray-500 gap-4">
+      @if(auth.isAuthenticated()){
+      <div class="relative w-80 border border-gray-300 h-8 rounded-lg">
+        <img src="search-icon.png" alt="Search Icon" class="w-6 absolute top-0.75 left-1" />
+        <input
+          type="text"
+          title="search"
+          class="h-8 w-72 focus:outline-none relative left-8 px-1"
+        />
+      </div>
+      <img src="cart-icon.png" alt="Cart Icon" class="w-7" />
+      <span>Account</span>
+      } @else {
+      <a class="cursor-pointer">Log in</a>
+      }
+    </div>
+  </div>
+</div>
