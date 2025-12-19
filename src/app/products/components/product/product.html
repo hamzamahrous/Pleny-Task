@@ -1,0 +1,75 @@
+<div class="min-h-135 flex flex-col border border-gray-300 rounded-lg">
+  <div class="relative">
+    <img [src]="product().thumbnail" alt="Product Image" class="h-64 rounded-lg" />
+    <span
+      class="absolute top-3 left-3 bg-sky-400 rounded py-1 px-1.5 text-xs font-semibold text-slate-800"
+    >
+      - {{ product().discountPercentage }}%</span
+    >
+  </div>
+
+  <div class="p-4 space-y-2 flex flex-col flex-1">
+    <span class="text-slate-900 text-xl font-semibold min-h-14">{{ product().title }}</span>
+    <p class="text-xs mt-1 text-gray-800 min-h-16 line-clamp-4">{{ product().description }}</p>
+
+    <div class="flex items-center gap-4 text-sm my-4">
+      <span class="text-gray-700 line-through">
+        <span class="text-slate-800 font-semibold">{{ product().price }}</span> USD
+      </span>
+
+      <span class="text-gray-700">
+        <span class="text-slate-800 font-semibold">{{ newPrice() }} </span> USD
+      </span>
+    </div>
+
+    <div class="flex flex-col text-sm mb-2 gap-0.5 min-h-16">
+      @if (product().brand) {
+      <span class="text-gray-700"
+        >Brand: <span class="text-slate-900 font-semibold">{{ product().brand }}</span></span
+      >
+      }
+      <span class="text-gray-700"
+        >Category: <span class="text-slate-900 font-semibold">{{ product().category }}</span></span
+      >
+      <span class="text-gray-700"
+        >In stock: <span class="text-slate-900 font-semibold">{{ product().stock }}</span></span
+      >
+    </div>
+
+    <div class="flex items-center justify-end gap-1 text-sm text-[#d19b11] mb-4">
+      <svg
+        width="16"
+        height="15"
+        viewBox="0 0 16 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="mb-0.5"
+      >
+        <path
+          d="M7.46933 0.157165C7.57277 -0.0524301 7.87164 -0.05243 7.97509 0.157165L10.1429 4.54969C10.184 4.63292 10.2634 4.69061 10.3553 4.70395L15.2027 5.40833C15.434 5.44194 15.5264 5.72618 15.359 5.88933L11.8513 9.30843C11.7849 9.37322 11.7545 9.46656 11.7702 9.55804L12.5983 14.3859C12.6378 14.6163 12.396 14.7919 12.1891 14.6832L7.85343 12.4038C7.77128 12.3606 7.67313 12.3606 7.59098 12.4038L3.2553 14.6832C3.04842 14.7919 2.80662 14.6163 2.84614 14.3859L3.67418 9.55804C3.68987 9.46656 3.65954 9.37322 3.59307 9.30843L0.0854362 5.88933C-0.0819356 5.72618 0.0104223 5.44194 0.241724 5.40833L5.08916 4.70395C5.18101 4.69061 5.26041 4.63292 5.30149 4.54969L7.46933 0.157165Z"
+          fill="#F4B000"
+          fill-opacity="0.9"
+        />
+      </svg>
+
+      <span>{{ product().rating }}</span>
+      <span class="text-gray-500">({{ product().reviews.length }})</span>
+    </div>
+
+    @if (isInCart()) {
+    <button
+      class="p-2 mt-auto bg-green-500 text-white rounded w-full uppercase font-semibold cursor-default"
+      disabled
+    >
+      In Cart
+    </button>
+    } @else {
+    <button
+      class="p-2 mt-auto bg-sky-400 text-slate-800 rounded w-full cursor-pointer uppercase font-semibold"
+      (click)="addToCart()"
+    >
+      Add To Cart
+    </button>
+    }
+  </div>
+</div>

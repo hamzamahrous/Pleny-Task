@@ -41,9 +41,14 @@
 
     <button
       type="submit"
-      class="w-full bg-sky-500 p-2 text-sm text-gray-700 rounded-lg cursor-pointer"
+      [disabled]="isLoading()"
+      class="w-full bg-sky-500 p-2 text-sm text-gray-700 rounded-lg cursor-pointer disabled:opacity-50"
     >
-      Sign in
+      @if(isLoading()){
+      <span>loading ... </span>
+      } @else {
+      <span>Sign in</span>
+      }
     </button>
   </form>
 </div>

@@ -18,4 +18,8 @@ body {
       padding-right: 4rem;
     }
   }
+
+  .main-color {
+    background-color: #41cccc;
+  }
 }

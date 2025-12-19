@@ -1,0 +1,31 @@
+<div class="flex justify-center items-center gap-3 mt-4">
+  <button
+    class="w-8 h-8 flex justify-center items-center text-gray-400 disabled:text-gray-200"
+    [disabled]="!canGoPrevious()"
+    (click)="goPrev()"
+  >
+    <i class="fa-solid fa-angle-left"></i>
+  </button>
+
+  @for (page of visiblePages(); track page; let i = $index) {
+  <button
+    class="w-8 h-8 border border-gray-300 rounded-lg p-1 flex justify-center items-center text-xs font-semibold"
+    [class]="{
+      'bg-sky-500': i === 0
+    }"
+    (click)="loadAnotherProductsPage(page)"
+  >
+    {{ page }}
+  </button>
+  @if (i < visiblePages().length - 1 && (visiblePages()[i + 1] - visiblePages()[i]> 1)) {
+  <span>...</span>
+  } }
+
+  <button
+    class="w-8 h-8 flex justify-center items-center text-gray-400 disabled:text-gray-200"
+    [disabled]="!canGoNext()"
+    (click)="goNext()"
+  >
+    <i class="fa-solid fa-angle-right"></i>
+  </button>
+</div>

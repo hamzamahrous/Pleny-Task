@@ -1,0 +1,31 @@
+<div class="border border-gray-300 rounded-lg p-3 w-3xs">
+  <h2 class="text-xl font-semibold mb-3">Products</h2>
+
+  @if(categories()) {
+  <div class="flex gap-1.5 text-sm">
+    <input
+      type="radio"
+      id="all"
+      name="category"
+      value="all"
+      (change)="onCategoryChanged($event)"
+      [checked]="selectedCategory() === 'all'"
+    />
+    <label for="all" class="cursor-pointer">All</label>
+  </div>
+  @for (category of categories(); track category.name) {
+  <div class="flex gap-1.5 text-sm">
+    <input
+      type="radio"
+      [id]="category.slug"
+      name="category"
+      [value]="category.slug"
+      (change)="onCategoryChanged($event)"
+      [checked]="selectedCategory() === category.slug"
+    />
+    <label [for]="category.slug" class="cursor-pointer">{{ category.name }}</label>
+  </div>
+  } } @else {
+  <span class="text-gray-700"> loading categories ... </span>
+  }
+</div>

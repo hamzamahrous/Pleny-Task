@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth } from '../auth';
+import { Auth } from '../services/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class Login implements OnInit {
   loginForm!: FormGroup;
   credentialsError = signal(false);
+  isLoading = signal(false);
 
   private formBuilder = inject(FormBuilder);
   private auth = inject(Auth);
@@ -44,6 +45,7 @@ export class Login implements OnInit {
       return;
     }
 
+    this.isLoading.set(true);
     const credentials = {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password,

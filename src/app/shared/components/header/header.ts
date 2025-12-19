@@ -1,5 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { Auth } from '../../../auth/auth';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Auth } from '../../../auth/services/auth';
+import { SearchQuery } from '../../services/search-query';
+import { Cart } from '../../services/cart';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +11,14 @@ import { Auth } from '../../../auth/auth';
   styleUrl: './header.css',
 })
 export class Header {
-  auth = inject(Auth);
+  private searchQueryService = inject(SearchQuery);
+  private authService = inject(Auth);
+  private cartService = inject(Cart);
+
+  isAuthenticated = this.authService.isAuthenticated;
+  cartCount = this.cartService.cartCount;
+
+  onSearchInputChange(query: string) {
+    this.searchQueryService.setSearchTerm(query);
+  }
 }
