@@ -56,20 +56,29 @@
       <span class="text-gray-500">({{ product().reviews.length }})</span>
     </div>
 
-    @if (isInCart()) {
     <button
-      class="p-2 mt-auto bg-green-500 text-white rounded w-full uppercase font-semibold cursor-default"
-      disabled
-    >
-      In Cart
-    </button>
-    } @else {
-    <button
-      class="p-2 mt-auto bg-sky-400 text-slate-800 rounded w-full cursor-pointer uppercase font-semibold"
+      class="p-2 mt-auto text-slate-800 rounded w-full uppercase font-semibold disabled:opacity-50"
+      [disabled]="isLoading()"
+      [class]="{
+        'bg-green-400': isInCart(),
+        'bg-sky-500': !isInCart(),
+        'cursor-pointer': !isInCart(),
+      }"
       (click)="addToCart()"
     >
-      Add To Cart
+      @if (isInCart()) {
+      <span>In Cart</span>
+      } @else if(isLoading()){
+      <span>Adding To Cart...</span>
+      } @else {
+      <span>Add To Cart</span>
+      }
     </button>
+
+    @if (error()) {
+    <span class="text-red-500 text-xs mt-1 text-center"
+      >Failed to add to cart. Please try again.</span
+    >
     }
   </div>
 </div>

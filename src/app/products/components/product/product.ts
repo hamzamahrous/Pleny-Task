@@ -1,8 +1,6 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { Product as ProductModel } from '../../models/product.model';
 import { Cart } from '../../../shared/services/cart/cart';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -13,6 +11,8 @@ import { tap } from 'rxjs';
 export class Product {
   product = input.required<ProductModel>();
   isInCart = signal(false);
+  isLoading = signal(false);
+  error = signal(false);
 
   private cartService = inject(Cart);
 
@@ -22,8 +22,15 @@ export class Product {
   });
 
   addToCart() {
+    this.error.set(false);
+
+    if (this.isInCart()) {
+      return;
+    }
+
+    this.isLoading.set(true);
     this.cartService
-      .updateCart(true, [
+      .updateCart([
         {
           id: this.product().id,
           quantity: 1,
@@ -31,8 +38,13 @@ export class Product {
       ])
       .subscribe({
         next: () => {
+          this.isLoading.set(false);
           this.isInCart.set(true);
-          this.cartService.incrementCartCount();
+        },
+
+        error: () => {
+          this.isLoading.set(false);
+          this.error.set(true);
         },
       });
   }
