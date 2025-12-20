@@ -1,6 +1,6 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { Product as ProductModel } from '../../models/product.model';
-import { Cart } from '../../../shared/services/cart';
+import { Cart } from '../../../shared/services/cart/cart';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
 

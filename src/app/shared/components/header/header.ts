@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Auth } from '../../../auth/services/auth';
-import { SearchQuery } from '../../services/search-query';
-import { Cart } from '../../services/cart';
+import { SearchQuery } from '../../services/search-query/search-query';
+import { Cart } from '../../services/cart/cart';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

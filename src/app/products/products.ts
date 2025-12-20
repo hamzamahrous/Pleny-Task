@@ -13,7 +13,7 @@ import { AsyncPipe } from '@angular/common';
 import { Category } from './models/product-category.model';
 import { ProductsCategories } from './components/products-categories/products-categories';
 import { ProductsContainer } from './components/products-container/products-container';
-import { SearchQuery } from '../shared/services/search-query';
+import { SearchQuery } from '../shared/services/search-query/search-query';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Pagination } from './components/pagination/pagination';
 

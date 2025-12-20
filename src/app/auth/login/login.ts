@@ -46,6 +46,7 @@ export class Login implements OnInit {
     }
 
     this.isLoading.set(true);
+
     const credentials = {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password,
@@ -53,13 +54,14 @@ export class Login implements OnInit {
 
     this.auth.login(credentials).subscribe({
       next: () => {
-        this.auth.authenticateUser();
+        this.isLoading.set(false);
         this.router.navigate(['/products']);
       },
 
       error: (err) => {
+        this.isLoading.set(false);
         this.credentialsError.set(true);
-        console.log(err);
+        console.error(err);
       },
     });
   }
