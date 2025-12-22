@@ -8,59 +8,51 @@ import { Products } from '../../services/products';
   styleUrl: './pagination.css',
 })
 export class Pagination {
+  private productsService = inject(Products);
+
   limit = input.required<number>();
   skip = input.required<number>();
   total = input.required<number>();
 
-  private productsService = inject(Products);
-
-  startingPage = computed<number>(() => {
-    const previousPages = Math.ceil(this.skip() / this.limit());
+  currentPage = computed(() => {
+    const previousPages = this.skip() / this.limit();
     return previousPages + 1;
   });
 
-  endingPage = computed<number>(() => {
-    return Math.ceil(this.total() / this.limit());
-  });
+  endingPage = computed(() => Math.ceil(this.total() / this.limit()));
 
-  hasMorePages = computed<boolean>(() => {
-    return this.startingPage() + 1 !== this.endingPage() - 1;
-  });
-
-  totalPages = computed<number>(() => {
-    return Math.ceil(this.total() / this.limit());
-  });
-
-  canGoPrevious = computed(() => this.startingPage() > 1);
-  canGoNext = computed(() => this.startingPage() < this.totalPages());
-
-  visiblePages = computed<number[]>(() => {
-    const st = this.startingPage();
-    const end = this.endingPage();
-
-    let pages: number[] = [];
-
-    if (end - st >= 1) {
-      // Pass the pages through set first to remove duplications for example when (st = 1 & end = 3 => [1, 2, 2, 3])
-      let pagesSet = new Set([st, st + 1, end - 1, end]);
-      pages = [...pagesSet].sort((a, b) => a - b);
-    } else {
-      pages = [st];
-    }
-
-    return pages;
-  });
-
-  loadAnotherProductsPage(pageNumber: number) {
-    let newSkip = (pageNumber - 1) * this.limit();
-    this.productsService.updateSkip(newSkip);
-  }
+  canGoPrevious = computed(() => this.currentPage() > 1);
+  canGoNext = computed(() => this.currentPage() < this.endingPage());
 
   goPrev() {
-    this.loadAnotherProductsPage(this.startingPage() - 1);
+    this.fetchPage(this.currentPage() - 1);
   }
 
   goNext() {
-    this.loadAnotherProductsPage(this.startingPage() + 1);
+    this.fetchPage(this.currentPage() + 1);
+  }
+
+  // Return the first page, last page, current page and it's previous and next pages
+  visiblePages = computed<number[]>(() => {
+    const st = this.currentPage();
+    const end = this.endingPage();
+
+    let pagesSet;
+
+    if (end - st >= 1) {
+      pagesSet = new Set([1, st, st + 1, end]);
+    } else {
+      pagesSet = new Set([1, st]);
+    }
+
+    if (st - 1 > 1) pagesSet.add(st - 1);
+    let pagesArr = [...pagesSet].sort((a, b) => a - b);
+
+    return pagesArr;
+  });
+
+  fetchPage(pageNumber: number) {
+    let newSkip = (pageNumber - 1) * this.limit();
+    this.productsService.updateSkip(newSkip);
   }
 }

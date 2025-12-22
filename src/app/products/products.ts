@@ -58,8 +58,9 @@ export class Products implements OnInit {
       // I think they should be combined => search inside selected category ... but I didn't find suitable endpoint to achieve this
       // as the endpoints are separated (one for searching & one for selecting category)
       if (hasSearch) {
-        // Reset category first
+        // Reset category & page number
         this.productsService.setCategory('all');
+        this.productsService.updateSkip(0);
         return this.productsService.searchProducts(search);
       }
 
@@ -77,6 +78,7 @@ export class Products implements OnInit {
   }
 
   onCategoryChanged(category: string) {
+    this.productsService.updateSkip(0);
     this.productsService.setCategory(category);
   }
 }
